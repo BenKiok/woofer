@@ -1,0 +1,36 @@
+{
+  "name": "woofer",
+  "version": "1.0.0",
+  "description": "A Twitter clone with dogs instead of birds",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/BenKiok/woofer.git"
+  },
+  "keywords": [
+    "tweet",
+    "twitter",
+    "woof",
+    "dog",
+    "bird",
+    "social",
+    "media"
+  ],
+  "author": "Ben Kioko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenKiok/woofer/issues"
+  },
+  "homepage": "https://github.com/BenKiok/woofer#readme",
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
+    "jest": "^26.6.3",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
+  }
+}
