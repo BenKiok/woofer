@@ -4,7 +4,7 @@
   "description": "A Twitter clone with dogs instead of birds",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "url": "https://github.com/BenKiok/woofer/issues"
   },
   "homepage": "https://github.com/BenKiok/woofer#readme",
-  "dependencies": {
+  "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "babel-loader": "^8.2.2",

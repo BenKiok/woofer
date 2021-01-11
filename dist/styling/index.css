@@ -1,0 +1,13 @@
+body {
+    font-family: 'Roboto', Courier, monospace;
+    color: white;
+    background: #15202B;
+}
+
+#app {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: top;
+    height: 100vh;
+}

@@ -1,0 +1,22 @@
+#menu {
+    display: fixed;
+}
+
+#menu div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#menu div span {
+    width: 43px;
+    height: 43px;
+    margin: 5px 25px 5px 0;
+    border: 2px solid white;
+    border-radius: 25px;
+}
+
+#menu div span:last-child {
+    margin-top: 281px;
+}
