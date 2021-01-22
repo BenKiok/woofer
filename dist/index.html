@@ -12,58 +12,34 @@
     <link rel="stylesheet" href="styling/woof.css">
 </head>
 <body>
-
     <div id="app">
-        <div id="menu">
-            <div>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span class="avatar"></span>
-            </div>
-        </div>
-        <div id="timeline">
-            <div id="head">
-                <h1>Home</h1>
-            </div>
-            <div id="main">
-                <div class="woof">
-                    <span class="avatar"></span>
-                    <div class="content">
-                        <input type="text" placeholder="What's happening?" class="text" id="input">
-                        <div class="more">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <button>Woof</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="break"></div>
-            </div>
-        </div>
+        
     </div>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="/__/firebase/8.2.1/firebase-analytics.js"></script>
-    <script src="/__/firebase/8.2.1/firebase-auth.js"></script>
-    <script src="/__/firebase/8.2.1/firebase-storage.js"></script>
-    <script src="/__/firebase/8.2.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
 
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
+    <script>
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDwfa0BciJTJ6q8XdOjkvWKDLYUszgdgzE",
+            authDomain: "woofer-8e88b.firebaseapp.com",
+            databaseURL: "https://woofer-8e88b-default-rtdb.firebaseio.com",
+            projectId: "woofer-8e88b",
+            storageBucket: "woofer-8e88b.appspot.com",
+            messagingSenderId: "502838964904",
+            appId: "1:502838964904:web:10f5337958af190a94c89d"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="main.js"></script>
 </body>
 </html>
