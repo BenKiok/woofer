@@ -66,6 +66,7 @@
     background: #4BA2F2;
     border-radius: 18px;
     margin-left: auto;
+    cursor: pointer;
 }
 
 .interact {
