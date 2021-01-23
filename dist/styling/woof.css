@@ -69,6 +69,10 @@
     cursor: pointer;
 }
 
+.more button:focus {
+    outline: none;
+}
+
 .interact {
     display: flex;
     flex-direction: row;
