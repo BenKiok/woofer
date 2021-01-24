@@ -11,3 +11,8 @@ body {
     align-items: top;
     height: 100vh;
 }
+
+.border {
+    border: 1px solid #38444D;
+    border-top: none;
+}

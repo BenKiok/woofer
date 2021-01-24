@@ -1,22 +1,20 @@
 #menu {
-    display: fixed;
+    height: 100vh;
+    position: fixed;
+    top: 10px;
+    left: 297px;
 }
 
-#menu div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
-
-#menu div span {
+#menu span {
+    display: block;
     width: 43px;
     height: 43px;
-    margin: 5px 25px 5px 0;
+    margin: 15px 25px 5px 0;
     border: 2px solid white;
     border-radius: 25px;
 }
 
-#menu div span:last-child {
-    margin-top: 281px;
+#menu .avatar {
+    position: relative;
+    top: 28%;
 }

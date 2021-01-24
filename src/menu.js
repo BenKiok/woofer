@@ -1,15 +1,15 @@
 const menu = (() => {
     const container = document.createElement("div"),
-          div = document.createElement("div");
+          avatar = document.createElement("span");
     
-    for (let i = 0; i < 10; i++) {
-        div.appendChild(document.createElement("span"));
+    for (let i = 0; i < 9; i++) {
+        container.appendChild(document.createElement("span"));
     }
-
-    div.childNodes[9].classList.add("avatar");
+    
+    avatar.classList.add("avatar");
 
     container.id = "menu";
-    container.appendChild(div);
+    container.appendChild(avatar);
     return container;
 })();
 

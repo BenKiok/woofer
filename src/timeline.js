@@ -1,7 +1,5 @@
 const timeline = (() => {
     const container = document.createElement("div"),
-          head = document.createElement("div"),
-            h1 = document.createElement("h1"),
           main = document.createElement("div"),
           woofbox = document.createElement("div"),
             avatar = document.createElement("span"),
@@ -12,9 +10,8 @@ const timeline = (() => {
           breakline = document.createElement("div");
 
     container.id = "timeline";
-    head.id = "head";
-    h1.innerText = "Home";
     main.id = "main";
+    main.classList.add("border");
     woofbox.classList.add("woof");
     avatar.classList.add("avatar");
     content.classList.add("content");
@@ -34,8 +31,7 @@ const timeline = (() => {
     content.append(input, more);
     woofbox.append(avatar, content);
     main.append(woofbox, breakline);
-    head.appendChild(h1);
-    container.append(head, main);
+    container.appendChild(main);
 
     return container;
 })();

@@ -1,14 +1,14 @@
 #timeline {
     width: 600px;
-    border: 1px solid #38444D;
 }
 
 #head {
-    display: fixed;
     font-weight: 700;
     font-size: 1.4rem;
-    border-bottom: 1px solid #38444D;
     padding: 14px;
+    background: #15202B;
+    position: sticky;
+    top: 0;
 }
 
 #main {
@@ -16,9 +16,9 @@
     flex-direction: column;
 }
 
-.break {
-    width: 600px;
-    border-bottom: 1px solid #38444D;
+#main .break {
+    width: 598px;
     height: 8px;
     background: #192734;
+    border-top: 1px solid #38444D;
 }
