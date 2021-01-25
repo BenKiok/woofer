@@ -42,6 +42,10 @@ const app = (() => {
         }
     });
 
+    window.addEventListener("resize", () => {
+        menu.style.left = (timeline.offsetLeft - 72) + "px";
+    });
+
     timeline.querySelector("button").addEventListener("click", () => {
         const input = timeline.querySelector("#input");
 
