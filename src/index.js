@@ -76,6 +76,7 @@ const app = (() => {
 
         for (let i = 0; i < 4; i++) {
             more.appendChild(document.createElement("span"));
+            more.childNodes[i].classList.add("click");
         }
 
         more.childNodes[0].innerText = data[prop].fav;
@@ -144,6 +145,7 @@ const app = (() => {
                 }
             });
         });
+
         text.append(h4, h3);
         content.append(text, more);
         container.append(avatar, content);

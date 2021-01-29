@@ -21,6 +21,7 @@ const timeline = (() => {
     input.id = "input";
     more.classList.add("more");
     button.innerText = "Woof";
+    button.classList.add("click");
     breakline.classList.add("break");
 
     for (let i = 0; i < 5; i++) {

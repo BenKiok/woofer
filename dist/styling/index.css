@@ -16,3 +16,7 @@ body {
     border: 1px solid #38444D;
     border-top: none;
 }
+
+.click {
+    cursor: pointer;
+}
