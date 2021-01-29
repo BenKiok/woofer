@@ -66,6 +66,7 @@ const app = (() => {
               h4 = document.createElement("h4"),
               h3 = document.createElement("h3"),
               more = document.createElement("div");
+        let incVal1, incVal2;
         
         container.classList.add("woof", "border");
         avatar.classList.add("avatar");
@@ -84,7 +85,37 @@ const app = (() => {
 
         h4.innerText = `${(new Date(data[prop].time))}`.slice(4, 15);
         h3.innerText = data[prop].text;
-        
+
+        // ******* add event listeners here ********
+        more.childNodes[0].addEventListener("click", () => {
+            firebase.database().ref("Woofs/").once("value", (snapshot) => {
+                const woofs = snapshot.val();
+                let thisWoof;
+
+                for (const woof in woofs) {
+                    if (`${(new Date(woofs[woof].time))}`.slice(4, 15) == h4.innerText &&
+                        woofs[woof].text == h3.innerText) {
+                            thisWoof = woofs[woof];
+                            break;
+                    }
+                }
+
+                if (thisWoof) {
+                    if (!incVal1) {
+                        thisWoof.fav++;
+                    } else {
+                        thisWoof.fav--;
+                    }
+
+                    incVal1 = !incVal1;
+                    more.childNodes[0].innerText = thisWoof.fav;
+                    firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
+                } else {
+                    alert("Error, could not find wolf.");
+                }
+            });
+        });
+
         text.append(h4, h3);
         content.append(text, more);
         container.append(avatar, content);
