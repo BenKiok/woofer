@@ -116,6 +116,34 @@ const app = (() => {
             });
         });
 
+        more.childNodes[1].addEventListener("click", () => {
+            firebase.database().ref("Woofs/").once("value", (snapshot) => {
+                const woofs = snapshot.val();
+                let thisWoof;
+
+                for (const woof in woofs) {
+                    if (`${(new Date(woofs[woof].time))}`.slice(4, 15) == h4.innerText &&
+                        woofs[woof].text == h3.innerText) {
+                            thisWoof = woofs[woof];
+                            break;
+                    }
+                }
+
+                if (thisWoof) {
+                    if (!incVal2) {
+                        thisWoof.rewoof++;
+                    } else {
+                        thisWoof.rewoof--;
+                    }
+
+                    incVal2 = !incVal2;
+                    more.childNodes[1].innerText = thisWoof.rewoof;
+                    firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
+                } else {
+                    alert("Error, could not find wolf.");
+                }
+            });
+        });
         text.append(h4, h3);
         content.append(text, more);
         container.append(avatar, content);
