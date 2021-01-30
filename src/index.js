@@ -79,16 +79,16 @@ const app = (() => {
             more.childNodes[i].classList.add("click");
         }
 
-        more.childNodes[0].innerText = data[prop].fav;
-        more.childNodes[1].innerText = data[prop].rewoof;
-        more.childNodes[2].innerText = "^";
+        more.childNodes[0].innerText = (data[prop].newWoof ? data[prop].newWoof.length : "0");
+        more.childNodes[1].innerText = data[prop].fav;
+        more.childNodes[2].innerText = data[prop].rewoof;
         more.childNodes[3].innerText = "^";
 
         h4.innerText = `${(new Date(data[prop].time))}`.slice(4, 15);
         h3.innerText = data[prop].text;
 
         // ******* add event listeners here ********
-        more.childNodes[0].addEventListener("click", () => {
+        more.childNodes[1].addEventListener("click", () => {
             firebase.database().ref("Woofs/").once("value", (snapshot) => {
                 const woofs = snapshot.val();
                 let thisWoof;
@@ -109,7 +109,7 @@ const app = (() => {
                     }
 
                     incVal1 = !incVal1;
-                    more.childNodes[0].innerText = thisWoof.fav;
+                    more.childNodes[1].innerText = thisWoof.fav;
                     firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
                 } else {
                     alert("Error, could not find wolf.");
@@ -117,7 +117,7 @@ const app = (() => {
             });
         });
 
-        more.childNodes[1].addEventListener("click", () => {
+        more.childNodes[2].addEventListener("click", () => {
             firebase.database().ref("Woofs/").once("value", (snapshot) => {
                 const woofs = snapshot.val();
                 let thisWoof;
@@ -138,7 +138,7 @@ const app = (() => {
                     }
 
                     incVal2 = !incVal2;
-                    more.childNodes[1].innerText = thisWoof.rewoof;
+                    more.childNodes[2].innerText = thisWoof.rewoof;
                     firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
                 } else {
                     alert("Error, could not find wolf.");
