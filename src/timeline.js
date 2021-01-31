@@ -25,7 +25,17 @@ const timeline = (() => {
     breakline.classList.add("break");
 
     for (let i = 0; i < 5; i++) {
-        more.appendChild(document.createElement("span"));
+        const icon = document.createElement("i");
+
+        icon.classList.add("click", "fas", 
+                (i == 0 ? "fa-camera" : 
+                (i == 1 ? "fa-image" : 
+                (i == 2 ? "fa-chart-bar" :
+                (i == 3 ? "fa-smile" :
+                (i == 4 ? "fa-calendar-alt" : "")
+        )))));
+
+        more.appendChild(icon);
     }
 
     more.appendChild(button);

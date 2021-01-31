@@ -20,3 +20,8 @@ body {
 .click {
     cursor: pointer;
 }
+
+.inline {
+    display: inline;
+    margin-left: 5px;
+}

@@ -5,13 +5,10 @@
     left: 570px;
 }
 
-#menu span {
+#menu i {
     display: block;
-    width: 43px;
-    height: 43px;
-    margin: 15px 25px 5px 0;
-    border: 2px solid white;
-    border-radius: 25px;
+    font-size: 1.8rem;
+    margin-bottom: 30px; 
 }
 
 #menu .avatar {

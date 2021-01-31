@@ -75,15 +75,28 @@ const app = (() => {
         more.classList.add("interact");
 
         for (let i = 0; i < 4; i++) {
-            more.appendChild(document.createElement("span"));
-            more.childNodes[i].classList.add("click");
+            const span = document.createElement("span"),
+                  icon = document.createElement("i"),
+                  text = document.createElement("p");
+            
+            icon.classList.add("click", "fas", 
+                (i === 0 ? "fa-reply" : 
+                (i === 1 ? "fa-retweet" : 
+                (i === 2 ? "fa-heart" :
+                (i === 3 ? "fa-share-square" : "")
+            ))));
+
+            text.innerText = 
+                (i === 0 ? (data[prop].newWoof ? data[prop].newWoof.length : "0") : 
+                (i === 1 ? data[prop].fav : 
+                (i === 2 ? data[prop].rewoof : ""
+            )));
+            text.classList.add("inline");
+
+            span.append(icon, text);
+            more.appendChild(span);
         }
-
-        more.childNodes[0].innerText = (data[prop].newWoof ? data[prop].newWoof.length : "0");
-        more.childNodes[1].innerText = data[prop].fav;
-        more.childNodes[2].innerText = data[prop].rewoof;
-        more.childNodes[3].innerText = "^";
-
+        
         h4.innerText = `${(new Date(data[prop].time))}`.slice(4, 15);
         h3.innerText = data[prop].text;
 
@@ -109,7 +122,7 @@ const app = (() => {
                     }
 
                     incVal1 = !incVal1;
-                    more.childNodes[1].innerText = thisWoof.fav;
+                    more.querySelectorAll(".inline")[1].innerText = thisWoof.fav;
                     firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
                 } else {
                     alert("Error, could not find wolf.");
@@ -138,7 +151,7 @@ const app = (() => {
                     }
 
                     incVal2 = !incVal2;
-                    more.childNodes[2].innerText = thisWoof.rewoof;
+                    more.querySelectorAll(".inline")[2].innerText = thisWoof.rewoof;
                     firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
                 } else {
                     alert("Error, could not find wolf.");
