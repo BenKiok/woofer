@@ -57,13 +57,13 @@ const functions = (() => {
     
                     if (thisWoof) {
                         if (!bool) {
-                            thisWoof.fav++;
+                            thisWoof.rewoof++;
                         } else {
-                            thisWoof.fav--;
+                            thisWoof.rewoof--;
                         }
     
                         bool = !bool;
-                        more.querySelectorAll(".inline")[1].innerText = thisWoof.fav;
+                        more.querySelectorAll(".inline")[1].innerText = thisWoof.rewoof;
                         firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
                     } else {
                         alert("Error, could not find wolf.");
@@ -86,13 +86,13 @@ const functions = (() => {
     
                     if (thisWoof) {
                         if (!boolean) {
-                            thisWoof.rewoof++;
+                            thisWoof.fav++;
                         } else {
-                            thisWoof.rewoof--;
+                            thisWoof.fav--;
                         }
     
                         boolean = !boolean;
-                        more.querySelectorAll(".inline")[2].innerText = thisWoof.rewoof;
+                        more.querySelectorAll(".inline")[2].innerText = thisWoof.fav;
                         firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
                     } else {
                         alert("Error, could not find wolf.");
@@ -100,6 +100,66 @@ const functions = (() => {
                 });
             });
         }
+
+        element.querySelector(".text").addEventListener("click", () => {
+            // removing extra elements, switching out styling
+            removeWoofs(element, element.parentNode);
+            element.id = "focus";
+            element.parentNode.querySelector(".woofbox").classList.add("vanish");
+            element.parentNode.querySelector(".woofbox").classList.remove("woof");
+            element.parentNode.querySelector(".break").classList.add("vanish");
+            
+            // adding a return button
+            if (!element.parentNode.querySelector("#head i")) {
+                const i = document.createElement("i");
+                i.classList.add("fas", "fa-arrow-left");
+                i.addEventListener("click", () => {
+                    element.parentNode.querySelector(".woofbox").classList.remove("vanish");
+                    element.parentNode.querySelector(".woofbox").classList.add("woof");
+                    element.parentNode.querySelector(".break").classList.remove("vanish");
+                    element.parentNode.querySelector("h1").innerText = "Home";
+
+                    i.remove();
+                    element.remove();
+                    
+                    readWoofs(firebase.database(), renderAllWoofs);
+                });
+                element.parentNode.querySelector("#head").insertBefore(i, element.parentNode.querySelector("h1"));
+            }
+            
+            element.parentNode.querySelector("h1").innerText = "Woof";
+
+            // readjusting the main woof
+            let tempNode = element.querySelector("h4");
+            // tempNode.innerText += " · Woofer for web";
+            element.querySelector("h4").remove();
+            element.querySelector(".content").insertBefore(tempNode, element.querySelector(".interact"));
+
+            // adding extra div
+            tempNode = element.querySelectorAll(".inline");
+            const stats = document.createElement("div");
+            stats.classList.add("stats");
+
+            Array.from(tempNode).forEach((node) => {
+                let index = Array.from(tempNode).indexOf(node);
+
+                if (index === 1 || index === 2) {
+                    let tempNode2 = node.cloneNode(true);
+                    tempNode2.innerText += (
+                        index === 1 ? " Rewoof" : (
+                            index === 2 ? " Like" : ""
+                        )
+                    ) + (
+                        Number(tempNode2.innerText) !== 1 ? "s" : ""
+                    );
+                    stats.appendChild(tempNode2);
+                }
+
+                node.remove();
+            });
+            
+            element.querySelector(".content").insertBefore(stats, element.querySelector(".interact"));
+        });
     }
 
     function renderAllWoofs (data) {
@@ -150,8 +210,8 @@ const functions = (() => {
 
             text.innerText = 
                 (i === 0 ? (data[prop].newWoof ? data[prop].newWoof.length : "0") : 
-                (i === 1 ? data[prop].fav : 
-                (i === 2 ? data[prop].rewoof : ""
+                (i === 1 ? data[prop].rewoof : 
+                (i === 2 ? data[prop].fav : ""
             )));
             text.classList.add("inline");
 
@@ -172,16 +232,15 @@ const functions = (() => {
     }
 
     function removeWoofs (node, parent) {
-        const parentArr = Array.from(parent.childNodes);
-
-        parentArr.forEach((child) => {
-            if (child != node) {
-                child.remove();
-                parentArr.splice(parentArr.indexOf(child), 1);
+        const parentObj = { ...parent.querySelectorAll(".woof.border") };
+        
+        for (const child in parentObj) {
+            if (parentObj[child] !== node) {
+                parentObj[child].remove();
             }
-        });
+        }
 
-        if (parentArr.length < 2) {
+        if (Array.from(parent.querySelectorAll(".woof.border")).length === 1) {
             return true;
         }
 
