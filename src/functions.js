@@ -63,7 +63,13 @@ const functions = (() => {
                         }
     
                         bool = !bool;
-                        more.querySelectorAll(".inline")[1].innerText = thisWoof.rewoof;
+                        if (more.parentNode.parentNode.id) {
+                            more.parentNode.querySelectorAll(".inline")[0].innerText = thisWoof.rewoof + " Rewoof" + (
+                                thisWoof.rewoof === 1 ? "" : "s"
+                            );
+                        } else {
+                            more.querySelectorAll(".inline")[1].innerText = thisWoof.rewoof;
+                        }
                         firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
                     } else {
                         alert("Error, could not find wolf.");
@@ -92,7 +98,13 @@ const functions = (() => {
                         }
     
                         boolean = !boolean;
-                        more.querySelectorAll(".inline")[2].innerText = thisWoof.fav;
+                        if (more.parentNode.parentNode.id) {
+                            more.parentNode.querySelectorAll(".inline")[1].innerText = thisWoof.fav + " Like" + (
+                                thisWoof.fav === 1 ? "" : "s"
+                            );
+                        } else {
+                            more.querySelectorAll(".inline")[2].innerText = thisWoof.fav;
+                        }
                         firebase.database().ref("Woofs/" + thisWoof.id).update(thisWoof);
                     } else {
                         alert("Error, could not find wolf.");
@@ -131,7 +143,6 @@ const functions = (() => {
 
             // readjusting the main woof
             let tempNode = element.querySelector("h4");
-            // tempNode.innerText += " · Woofer for web";
             element.querySelector("h4").remove();
             element.querySelector(".content").insertBefore(tempNode, element.querySelector(".interact"));
 

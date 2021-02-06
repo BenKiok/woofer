@@ -2,7 +2,7 @@ const timeline = (() => {
     const container = document.createElement("div"),
           main = document.createElement("div"),
           woofbox = document.createElement("div"),
-            avatar = document.createElement("span"),
+                avatar = document.createElement("span"),
             content = document.createElement("div"),
             input = document.createElement("input"),
             more = document.createElement("div"),
@@ -12,7 +12,7 @@ const timeline = (() => {
     container.id = "timeline";
     main.id = "main";
     main.classList.add("border");
-    woofbox.classList.add("woof");
+    woofbox.classList.add("woof", "woofbox");
     avatar.classList.add("avatar");
     content.classList.add("content");
     input.type = "text";

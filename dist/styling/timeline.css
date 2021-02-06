@@ -11,6 +11,14 @@
     top: 0;
 }
 
+#head i, #head h1 {
+    display: inline;
+}
+
+#head i {
+    margin-right: 15px;
+}
+
 #main {
     display: flex;
     flex-direction: column;
