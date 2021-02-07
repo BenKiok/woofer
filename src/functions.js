@@ -107,13 +107,20 @@ const functions = (() => {
                                     objOfWoofs[woof].text == h3.innerText) {
                                         woofObj = objOfWoofs[woof];
                                         break;
-                                }for (const prop in data) {
-                                    createWoofHTML(data, prop);
                                 }
+                            }
+
+                            const replyObj = {
+                                text: document.querySelector("#reply input").value,
+                                rewoof: 0,
+                                fav: 0
                             }
 
                             if(writeReplyWoof(woofObj, replyObj, mainWoof)) {
                                 document.querySelector("#reply").remove();
+
+                                woofObj.nextWoof.push(replyObj);
+                                createWoofHTML(woofObj.nextWoof, woofObj.nextWoof.indexOf(replyObj), true);
                             } else {
                                 console.log("Error, could not append reply.");
                             }
@@ -338,11 +345,10 @@ const functions = (() => {
         content.append(text, more);
         container.append(avatar, content);
 
-        addWoofListeners(container);
-
         if (reverseRender) {
             timeline.appendChild(container);
         } else {
+            addWoofListeners(container);
             timeline.insertBefore(container, timeline.querySelector(".woof.border"));
         }
     }
