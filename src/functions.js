@@ -31,8 +31,9 @@ const functions = (() => {
                 } else {
                     obj.nextWoof = [ replyObj ];
                 }
-
-                node.querySelector("span .inline").innerText = obj.nextWoof.length;
+                if (node.querySelector("span .inline")) {
+                    node.querySelector("span .inline").innerText = obj.nextWoof.length;
+                }
                 firebase.database().ref("/Woofs/" + woofId).update(obj);
 
                 return true;
@@ -106,13 +107,9 @@ const functions = (() => {
                                     objOfWoofs[woof].text == h3.innerText) {
                                         woofObj = objOfWoofs[woof];
                                         break;
+                                }for (const prop in data) {
+                                    createWoofHTML(data, prop);
                                 }
-                            }
-
-                            const replyObj = {
-                                text: document.querySelector("#reply input").value,
-                                rewoof: 0,
-                                fav: 0
                             }
 
                             if(writeReplyWoof(woofObj, replyObj, mainWoof)) {
@@ -255,12 +252,31 @@ const functions = (() => {
             });
             
             element.querySelector(".content").insertBefore(stats, element.querySelector(".interact"));
+
+            // append replies
+            readWoofs(firebase.database(), (woofs) => {
+                const h3 = element.querySelector("h3"),
+                      h4 = element.querySelector("h4");
+                let thisWoof;
+                
+                for (const woof in woofs) {
+                    if (`${(new Date(woofs[woof].time))}`.slice(4, 15) == h4.innerText &&
+                        woofs[woof].text == h3.innerText) {
+                            thisWoof = woofs[woof];
+                            break;
+                    }
+                }
+
+                if (thisWoof.nextWoof) {
+                    renderAllWoofs(thisWoof.nextWoof, true);
+                }
+            });
         });
     }
 
-    function renderAllWoofs (data) {
+    function renderAllWoofs (data, reverse = false) {
         for (const prop in data) {
-            createWoofHTML(data, prop);
+            createWoofHTML(data, prop, reverse);
         }
     }
 
@@ -277,7 +293,7 @@ const functions = (() => {
         createWoofHTML(dataArr, i);
     }
 
-    function createWoofHTML (data, prop) {
+    function createWoofHTML (data, prop, reverseRender) {
         const container = document.createElement("div"),
               avatar = document.createElement("span"),
               content = document.createElement("div"),
@@ -324,7 +340,11 @@ const functions = (() => {
 
         addWoofListeners(container);
 
-        timeline.insertBefore(container, timeline.querySelector(".woof.border"));
+        if (reverseRender) {
+            timeline.appendChild(container);
+        } else {
+            timeline.insertBefore(container, timeline.querySelector(".woof.border"));
+        }
     }
 
     function removeWoofs (node, parent) {
