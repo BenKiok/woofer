@@ -1,3 +1,5 @@
+import reply from "./reply.js";
+
 const functions = (() => {
     const writeWoof = (obj) => {
         let woofId;
@@ -9,6 +11,32 @@ const functions = (() => {
             firebase.database().ref("/Woofs/" + woofId).update(obj);
 
             return true;
+        }
+
+        return false;
+    }
+
+    const writeReplyWoof = (obj, replyObj, node) => {
+        let woofId = obj.id;
+
+        if (typeof obj === "object" && obj) {
+            if (typeof replyObj === "object" && replyObj) {
+                replyObj.time = (new Date).getTime();
+                if (obj.nextWoof) {
+                    obj.nextWoof.push(replyObj);
+
+                    if (node.id === "focus") {
+                        console.log("Appending reply...");
+                    }
+                } else {
+                    obj.nextWoof = [ replyObj ];
+                }
+
+                node.querySelector("span .inline").innerText = obj.nextWoof.length;
+                firebase.database().ref("/Woofs/" + woofId).update(obj);
+
+                return true;
+            }
         }
 
         return false;
@@ -42,6 +70,63 @@ const functions = (() => {
         let bool, boolean;
 
         if (more) {
+            let prevIndex;
+
+            more.childNodes[0].addEventListener("click", () => {
+                const mainWoof = more.parentNode.parentNode;
+
+                let index = Array.from(
+                    mainWoof.parentNode.querySelectorAll(".woof.border:not(#reply)")
+                ).indexOf(mainWoof);
+
+                if (document.querySelector("#reply")) {
+                    document.querySelector("#reply").remove();
+                }
+
+                if (prevIndex === index) {
+                    prevIndex = null;
+                } else {
+                    mainWoof.parentNode.insertBefore(reply(), 
+                        Array.from(
+                            mainWoof.parentNode.querySelectorAll(".woof.border")
+                        )[index + 1]
+                    );
+                    prevIndex = index;
+                    
+                    // event listener for replies
+                    document.querySelector("#reply button").addEventListener("click", () => {
+                        firebase.database().ref("Woofs/").once("value", (snapshot) => {
+                            const objOfWoofs = snapshot.val(),
+                                h4 = mainWoof.querySelector("h4"),
+                                h3 = mainWoof.querySelector("h3");
+                            let woofObj;
+            
+                            for (const woof in objOfWoofs) {
+                                if (`${(new Date(objOfWoofs[woof].time))}`.slice(4, 15) == h4.innerText &&
+                                    objOfWoofs[woof].text == h3.innerText) {
+                                        woofObj = objOfWoofs[woof];
+                                        break;
+                                }
+                            }
+
+                            const replyObj = {
+                                text: document.querySelector("#reply input").value,
+                                rewoof: 0,
+                                fav: 0
+                            }
+
+                            if(writeReplyWoof(woofObj, replyObj, mainWoof)) {
+                                document.querySelector("#reply").remove();
+                            } else {
+                                console.log("Error, could not append reply.");
+                            }
+                        });
+                    });
+                }
+
+                
+            });
+
             more.childNodes[1].addEventListener("click", () => {
                 firebase.database().ref("Woofs/").once("value", (snapshot) => {
                     const woofs = snapshot.val();
@@ -220,7 +305,7 @@ const functions = (() => {
             ))));
 
             text.innerText = 
-                (i === 0 ? (data[prop].newWoof ? data[prop].newWoof.length : "0") : 
+                (i === 0 ? (data[prop].nextWoof ? data[prop].nextWoof.length : "0") : 
                 (i === 1 ? data[prop].rewoof : 
                 (i === 2 ? data[prop].fav : ""
             )));
