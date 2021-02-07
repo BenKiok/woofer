@@ -14,6 +14,10 @@ const app = (() => {
         menu.style.left = (timeline.offsetLeft - 72) + "px";
     });
 
+    menu.querySelector(".fa-home").addEventListener("click", () => {
+        window.location.reload();
+    });
+
     timeline.querySelector("button").addEventListener("click", () => {
         const input = timeline.querySelector("#input");
 
