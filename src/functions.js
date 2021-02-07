@@ -147,8 +147,10 @@ const functions = (() => {
                     if (thisWoof) {
                         if (!bool) {
                             thisWoof.rewoof++;
+                            more.querySelectorAll("i")[1].classList.add("rewoof");
                         } else {
                             thisWoof.rewoof--;
+                            more.querySelectorAll("i")[1].classList.remove("rewoof");
                         }
     
                         bool = !bool;
@@ -182,8 +184,10 @@ const functions = (() => {
                     if (thisWoof) {
                         if (!boolean) {
                             thisWoof.fav++;
+                            more.querySelectorAll("i")[2].classList.add("fav");
                         } else {
                             thisWoof.fav--;
+                            more.querySelectorAll("i")[2].classList.remove("fav");
                         }
     
                         boolean = !boolean;
