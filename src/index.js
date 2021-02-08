@@ -18,6 +18,10 @@ const app = (() => {
         window.location.reload();
     });
 
+    head.querySelector("h1").addEventListener("click", () => {
+        window.scrollTo(0, 0);
+    });
+
     timeline.querySelector("button").addEventListener("click", () => {
         const input = timeline.querySelector("#input");
 

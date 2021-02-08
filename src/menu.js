@@ -5,7 +5,7 @@ const menu = (() => {
     for (let i = 0; i < 10; i++) {
         const icon = document.createElement("i");
 
-        icon.classList.add("click", "fas", 
+        icon.classList.add("click", "fas",
             (i === 0 ? "fa-dog" : 
             (i === 1 ? "fa-home" : 
             (i === 2 ? "fa-search" :
