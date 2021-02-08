@@ -3,11 +3,15 @@
     position: fixed;
     top: 10px;
     left: 570px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #menu i {
     display: block;
     font-size: 1.8rem;
+    margin: 0 auto;
     margin-bottom: 30px; 
 }
 
