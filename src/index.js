@@ -2,6 +2,7 @@ import woofer from "./functions.js";
 import menu from "./menu.js";
 import head from "./head.js";
 import timeline from "./timeline.js";
+import reply from "./reply.js";
 
 const app = (() => {
     const app = document.querySelector("#app");

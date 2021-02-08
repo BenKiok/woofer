@@ -50,25 +50,10 @@ const functions = (() => {
             });
     }
 
-    const setNextWoof = (obj1, obj2) => {
-        if (obj1 && (obj1.nextWoof || obj1.nextWoof === null)) {
-            if (obj2 && obj2.id) {
-                obj1.nextWoof = obj2.id;
-
-                firebase.database().ref("/Woofs/" + obj1.id).update(obj1);
-
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    function addWoofListeners (element) {
+    function addReplyListener (element) {
         const more = element.querySelector(".interact"),
               h3 = element.querySelector("h3"),
               h4 = element.querySelector("h4");
-        let bool, boolean;
 
         if (more) {
             let prevIndex;
@@ -128,9 +113,17 @@ const functions = (() => {
                     });
                 }
 
-                
             });
+        }
+    }
 
+    function addRewoofListener (element) {
+        const more = element.querySelector(".interact"),
+              h3 = element.querySelector("h3"),
+              h4 = element.querySelector("h4");
+        let bool;
+
+        if (more) {
             more.childNodes[1].addEventListener("click", () => {
                 firebase.database().ref("Woofs/").once("value", (snapshot) => {
                     const woofs = snapshot.val();
@@ -167,7 +160,16 @@ const functions = (() => {
                     }
                 });
             });
-    
+        }
+    }
+
+    function addFavListener (element) {
+        const more = element.querySelector(".interact"),
+              h3 = element.querySelector("h3"),
+              h4 = element.querySelector("h4");
+        let boolean;
+
+        if (more) {
             more.childNodes[2].addEventListener("click", () => {
                 firebase.database().ref("Woofs/").once("value", (snapshot) => {
                     const woofs = snapshot.val();
@@ -205,7 +207,9 @@ const functions = (() => {
                 });
             });
         }
+    }
 
+    function addFocusListener (element) {
         element.querySelector(".text").addEventListener("click", () => {
             // removing extra elements, switching out styling
             removeWoofs(element, element.parentNode);
@@ -352,7 +356,10 @@ const functions = (() => {
         if (reverseRender) {
             timeline.appendChild(container);
         } else {
-            addWoofListeners(container);
+            addReplyListener(container);
+            addRewoofListener(container);
+            addFavListener(container);
+            addFocusListener(container);
             timeline.insertBefore(container, timeline.querySelector(".woof.border"));
         }
     }
@@ -375,13 +382,9 @@ const functions = (() => {
 
     return { 
         writeWoof, 
-        readWoofs, 
-        setNextWoof, 
-        addWoofListeners, 
+        readWoofs,
         renderAllWoofs,
         renderNewWoof,
-        createWoofHTML,
-        removeWoofs
      };
 })();
 
