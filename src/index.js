@@ -1,4 +1,5 @@
 import login from "./login.js";
+import signup from "./signup.js";
 import woofer from "./functions.js";
 import menu from "./menu.js";
 import head from "./head.js";
@@ -8,46 +9,93 @@ import reply from "./reply.js";
 const app = (() => {
     const app = document.querySelector("#app");
 
-    // app.appendChild(login);
-    woofer.readWoofs(firebase.database(), woofer.renderAllWoofs);
-    addWoofListeners();
-
-// Event listeners ----------------------------------------
-
-    window.addEventListener("resize", () => {
-        menu.style.left = (timeline.offsetLeft - 72) + "px";
-    });
-
-    menu.querySelector(".fa-home").addEventListener("click", () => {
-        window.location.reload();
-    });
-
-    head.querySelector("h1").addEventListener("click", () => {
-        window.scrollTo(0, 0);
-    });
-
-    timeline.querySelector("button").addEventListener("click", () => {
-        const input = timeline.querySelector("#input");
-
-        if (input.value.length > 0) {
-            const newWoof = {
-                text: input.value,
-                fav: 0,
-                rewoof: 0,
-            }
-
-            if (woofer.writeWoof(newWoof)) {
-                input.value = "";
-                woofer.readWoofs(firebase.database(), woofer.renderNewWoof);
-            } else {
-                alert("Unable to send woof. Try again in a few seconds.");
-            }
-        }
-    });
-
     timeline.insertBefore(head, timeline.querySelector("#main"));
-    app.append(menu, timeline);
-    menu.style.left = (timeline.offsetLeft - 72) + "px";
+    app.appendChild(login);
+
+// // Event listeners ----------------------------------------
+
+    login.querySelector("p").addEventListener("click", () => {
+        login.remove();
+        app.appendChild(signup);
+    });
+
+    signup.querySelector("p").addEventListener("click", () => {
+        signup.remove();
+        app.appendChild(login);
+    });
+
+    login.querySelector("button").addEventListener("click", () => {
+        const email = login.querySelector("input"),
+              password = login.querySelectorAll("input")[1];
+        
+        firebase.auth().signInWithEmailAndPassword(email.value, password.value)
+        .then((userCredential) => {
+            let user = userCredential.user;
+            login.remove();
+            app.append(menu, timeline);
+            menu.style.left = (timeline.offsetLeft - 72) + "px";
+            woofer.readWoofs(firebase.database(), woofer.renderAllWoofs);
+            addWoofListeners();
+        })
+        .catch((err) => {
+            alert(err);
+        });
+
+        email.value = "";
+        password.value = "";
+    });
+
+    signup.querySelector("button").addEventListener("click", () => {
+        const email = signup.querySelector("input"),
+              password = signup.querySelectorAll("input")[1];
+        
+        firebase.auth().createUserWithEmailAndPassword(email.value, password.value)
+        .then((userCredential) => {
+            let user = userCredential.user;
+            signup.remove();
+            app.append(menu, timeline);
+            menu.style.left = (timeline.offsetLeft - 72) + "px";
+            woofer.readWoofs(firebase.database(), woofer.renderAllWoofs);
+            addWoofListeners();
+        })
+        .catch((err) => {
+            alert(err);
+        });
+
+        email.value = "";
+        password.value = "";
+    });
+
+//     window.addEventListener("resize", () => {
+//         menu.style.left = (timeline.offsetLeft - 72) + "px";
+//     });
+
+//     menu.querySelector(".fa-home").addEventListener("click", () => {
+//         window.location.reload();
+//     });
+
+//     head.querySelector("h1").addEventListener("click", () => {
+//         window.scrollTo(0, 0);
+//     });
+
+//     timeline.querySelector("button").addEventListener("click", () => {
+//         const input = timeline.querySelector("#input");
+
+//         if (input.value.length > 0) {
+//             const newWoof = {
+//                 text: input.value,
+//                 fav: 0,
+//                 rewoof: 0,
+//             }
+
+//             if (woofer.writeWoof(newWoof)) {
+//                 input.value = "";
+//                 woofer.readWoofs(firebase.database(), woofer.renderNewWoof);
+//             } else {
+//                 alert("Unable to send woof. Try again in a few seconds.");
+//             }
+//         }
+//     });
 
 // Main woof logic ---------------------------------------
 
