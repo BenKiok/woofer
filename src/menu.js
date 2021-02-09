@@ -2,7 +2,7 @@ const menu = (() => {
     const container = document.createElement("div"),
           avatar = document.createElement("span");
     
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 9; i++) {
         const icon = document.createElement("i");
 
         icon.classList.add("click", "fas",
@@ -14,9 +14,8 @@ const menu = (() => {
             (i === 5 ? "fa-bookmark":
             (i === 6 ? "fa-file-alt" :
             (i === 7 ? "fa-user" :
-            (i === 8 ? "fa-ellipsis-h" :
-            (i === 9 ? "avatar" : "")
-        ))))))))));
+            (i === 8 ? "fa-ellipsis-h" : "")
+        )))))))));
 
         container.appendChild(icon);
     }
